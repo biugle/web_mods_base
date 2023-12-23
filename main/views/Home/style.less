@@ -1,0 +1,24 @@
+[data-component='Home'] {
+  & {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .webview-wrapper {
+    width: 100%;
+    height: 500px;
+    display: block;
+    overflow: auto;
+  }
+
+  .webview-wrapper.active {
+    display: block;
+  }
+
+  #webview-container {
+    width: 100%;
+    height: 100%;
+    /* 使用百分比以填充父元素大小 */
+  }
+}

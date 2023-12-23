@@ -1,0 +1,18 @@
+{
+  "name": "z_mod_angular",
+  "displayName": "AngularModule",
+  "description": "AngularModule-Demo",
+  "version": "1.0.0",
+  "module_config": {
+    "type": "MOD",
+    "devURL": "http://localhost:9981",
+    "prodPath": "index.html",
+    "platform_version": "1.0.0",
+    "project": "biugle_mods"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

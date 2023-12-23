@@ -1,0 +1,18 @@
+{
+  "name": "notification",
+  "displayName": "Notify模块",
+  "description": "Notify模块，用于展示全局通知信息。",
+  "version": "1.0.0",
+  "module_config": {
+    "type": "COMMON",
+    "devURL": "http://localhost:9905",
+    "prodPath": "index.html",
+    "platform_version": "1.0.0",
+    "project": "biugle_common"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

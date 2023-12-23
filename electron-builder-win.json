@@ -1,0 +1,31 @@
+{
+  "appId": "cn.biugle.mods.base",
+  "copyright": "Copyright © 2023 ${author}",
+  "asar": true,
+  "files": [
+    "build/**/*"
+  ],
+  "productName": "BiugleModsBase",
+  "directories": {
+    "output": "build_exe/${version}"
+  },
+  "win": {
+    "target": [
+      "nsis"
+    ],
+    "icon": "build/logos/icon.ico"
+  },
+  "nsis": {
+    "language": 2052,
+    "artifactName": "${productName}_Windows_Setup_${version}.${ext}",
+    "allowElevation": true,
+    "installerHeader": "build/logos/icon.ico",
+    "installerHeaderIcon": "build/logos/icon.ico",
+    "uninstallerIcon": "build/logos/icon.ico",
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "deleteAppDataOnUninstall": true,
+    "allowToChangeInstallationDirectory": true,
+    "oneClick": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "manager",
+  "displayName": "管理模块",
+  "description": "管理模块，可以管理全局设置、模块安装卸载等。",
+  "version": "1.0.0",
+  "module_config": {
+    "type": "CORE",
+    "devURL": "http://localhost:9900",
+    "prodPath": "index.html",
+    "platform_version": "1.0.0",
+    "project": "biugle_core"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

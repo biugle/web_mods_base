@@ -1,0 +1,18 @@
+{
+  "name": "navigation",
+  "displayName": "导航栏",
+  "description": "导航栏，用于展示已安装的 MOD 模块。",
+  "version": "1.0.0",
+  "module_config": {
+    "type": "CORE",
+    "devURL": "http://localhost:9902",
+    "prodPath": "index.html",
+    "platform_version": "1.0.0",
+    "project": "biugle_core"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "search",
+  "displayName": "通用查询模块",
+  "description": "通用查询模块，支持查询各种数据。",
+  "version": "1.0.0",
+  "module_config": {
+    "type": "PROJECT",
+    "devURL": "http://localhost:9999",
+    "prodPath": "index.html",
+    "platform_version": "1.0.0",
+    "project": "biugle_project"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

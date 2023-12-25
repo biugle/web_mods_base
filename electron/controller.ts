@@ -39,11 +39,11 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
   });
 
   // 关闭某个模块
-  ipcMain.on('close-mods', (event, module) => {
-    if (MODS_TAB_MAP[module.name]) {
-      delete MODS_TAB_MAP[module.name];
+  ipcMain.on('close-mods', (event, moduleName) => {
+    if (MODS_TAB_MAP[moduleName]) {
+      delete MODS_TAB_MAP[moduleName];
     }
-    const tabIndex = MODS_TAB_LIST.indexOf(module.name);
+    const tabIndex = MODS_TAB_LIST.indexOf(moduleName);
     if (tabIndex != -1) {
       MODS_TAB_LIST.splice(tabIndex, 1);
     }

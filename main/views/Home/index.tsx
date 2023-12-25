@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 15:48:28
+ * @LastEditTime: 2023-12-25 17:28:05
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -39,17 +39,20 @@ const Home = () => {
     <div data-component="Home">
       <div id="frame-container"></div>
       <div id="nav-container">
-        {modules.map((item) => (
-          <Button
-            key={item.name}
-            disabled={item.name === activeTab}
-            onClick={() => {
-              window.xIpc.send('change-mods', item);
-            }}
-          >
-            {item.displayName}
-          </Button>
-        ))}
+        <div style={{ display: 'flex', width: '100%', height: '100%', alignItems: 'center', padding: '10px' }}>
+          {modules.map((item) => (
+            <Button
+              style={{ margin: '5px' }}
+              key={item.name}
+              disabled={item.name === activeTab}
+              onClick={() => {
+                window.xIpc.send('change-mods', item);
+              }}
+            >
+              {item.displayName}
+            </Button>
+          ))}
+        </div>
       </div>
       <div className="main">
         <div id="tool-container"></div>
@@ -65,13 +68,14 @@ const Home = () => {
               <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
               <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
             </span>
-            <div>
+            <div style={{ marginLeft: '10px' }}>
               {tabViews.map((item) => (
                 <Tag
                   key={item.name}
+                  style={{ cursor: 'pointer' }}
                   color={item.name === activeTab ? 'geekblue' : 'default'}
                   onClick={() => {
-                    // window.xIpc.send('change-mods', item);
+                    window.xIpc.send('close-mods', item.name);
                   }}
                 >
                   {item.displayName}

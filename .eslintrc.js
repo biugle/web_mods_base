@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:18:11
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-07-04 16:13:10
+ * @LastEditTime: 2023-12-25 13:44:20
  * @Description: eslint 配置文件
- * @FilePath: \web_base\.eslintrc.js
+ * @FilePath: \web_mods_base\.eslintrc.js
  */
 
 module.exports = {
@@ -166,6 +166,7 @@ module.exports = {
           'unlink',
           'macos',
           'submenu',
+          'webview',
         ],
         skipIfMatch: [
           // http url

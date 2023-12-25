@@ -44,7 +44,6 @@ const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
       // @ts-ignore
       // eslint-disable-next-line react/no-unknown-property, prettier/prettier
       autosize="on"
-      className="adapt-webview"
       // @ts-ignore
       // eslint-disable-next-line react/no-unknown-property, prettier/prettier
       allowpopups="true"
@@ -55,6 +54,7 @@ const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
       // eslint-disable-next-line react/no-unknown-property
       preload={window.xIpc.getPreloadJSPath()}
       ref={webviewRef}
+      className="adapt-webview"
       {...props}
     />
   );

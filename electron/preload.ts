@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-18 10:34:52
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 11:55:05
+ * @LastEditTime: 2023-12-25 14:15:00
  * @Description: preload
  * @FilePath: \web_mods_base\electron\preload.ts
  */
@@ -23,6 +23,8 @@ let MODULES: { modulesMap: any; modulesList: any[] } = {
   modulesList: [],
 };
 let IS_GET_MODULES = false;
+// eslint-disable-next-line no-undef
+const NODE_ENV = process.env.NODE_ENV;
 
 contextBridge.exposeInMainWorld('xIpc', {
   send: (channel, ...args) => {
@@ -36,6 +38,7 @@ contextBridge.exposeInMainWorld('xIpc', {
     console.log('destroy');
     ipcRenderer.send('destroy');
   },
+  getNodeENV: () => NODE_ENV,
   getVersion: () => pkg['version'],
   // eslint-disable-next-line no-undef
   getPreloadJSPath: () => path.join(__dirname, './preload.js'),

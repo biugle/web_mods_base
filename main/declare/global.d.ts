@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 10:55:00
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 11:00:29
+ * @LastEditTime: 2023-12-25 14:15:28
  * @Description: 全局声明
  * @FilePath: \web_mods_base\main\declare\global.d.ts
  */
@@ -11,9 +11,10 @@ interface Window {
     send: (channel: string, ...args: any[]) => void;
     on: (channel: string, listener: (...args: any[]) => void) => void;
     exit: () => void;
+    getNodeENV: () => string;
     getVersion: () => string;
     getPreloadJSPath: () => string;
-    getModules: () => any;
+    getModules: () => Promise<any>;
     getModuleUrl: (moduleName: string, params: any) => string;
     isMinimized: () => boolean;
     isMaximized: () => boolean;

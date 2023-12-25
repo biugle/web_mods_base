@@ -9,7 +9,6 @@
 import fs from 'fs';
 import path from 'path';
 import XCall from 'js-xcall';
-import { app } from 'electron';
 
 export async function getModulesByNodeFS() {
   // eslint-disable-next-line no-undef

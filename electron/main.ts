@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-15 15:42:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 10:47:05
+ * @LastEditTime: 2023-12-25 13:46:17
  * @Description: electron 打包与启动文件主程序
  * @FilePath: \web_mods_base\electron\main.ts
  */
@@ -12,6 +12,7 @@ import url from 'url';
 import mime from 'mime-types';
 import { app, BrowserWindow, globalShortcut, protocol } from 'electron';
 import { initEvents } from './events';
+import { bindWebviewController } from './controller';
 
 // eslint-disable-next-line no-undef
 const mode = process.argv[2]; // process.env.NODE_ENV
@@ -87,6 +88,7 @@ const createWindow = () => {
       const mimeType = mime.lookup(filePath);
 
       // 返回文件内容和 MIME 类型给渲染进程
+      // @ts-ignore
       respond({ mimeType, data });
     });
   });
@@ -98,6 +100,7 @@ const createWindow = () => {
   });
 
   // ...
+  bindWebviewController(mainWindow);
 
   // mainWindow.show(); // control mainWindow show
   initEvents(mainWindow);

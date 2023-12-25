@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-15 15:42:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-23 16:44:18
+ * @LastEditTime: 2023-12-25 10:47:05
  * @Description: electron 打包与启动文件主程序
  * @FilePath: \web_mods_base\electron\main.ts
  */
@@ -10,7 +10,7 @@ import * as path from 'path';
 import fs from 'fs';
 import url from 'url';
 import mime from 'mime-types';
-import { app, BrowserWindow, globalShortcut, ipcMain, protocol, net } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain, protocol } from 'electron';
 import { initEvents } from './events';
 
 // eslint-disable-next-line no-undef
@@ -104,8 +104,18 @@ const createWindow = () => {
   });
 
   ipcMain.on('open-new-window', (event, url) => {
-    const win = new BrowserWindow({ width: 800, height: 600 });
+    const win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      show: false, // 隐藏窗口，等待图标设置完成后再显示
+    });
+
     win.loadURL(url);
+
+    win.once('ready-to-show', () => {
+      win.setIcon(app.isPackaged ? 'build/logos/icon.ico' : 'resource/logos/icon.ico');
+      win.show(); // 显示窗口
+    });
   });
 
   // ...

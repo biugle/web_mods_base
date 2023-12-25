@@ -2,8 +2,8 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-23 16:44:35
- * @Description: 新建文件
+ * @LastEditTime: 2023-12-25 10:58:36
+ * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
 import React, { useEffect, useRef, useState } from 'react';
@@ -46,7 +46,7 @@ const Home = () => {
           <AdaptiveWebView src="https://www.baidu.com" />
         </div>
         <div className="webview-wrapper">
-          <AdaptiveWebView src="biu://localhost/modules/header/index.html?q=test-123" />
+          <AdaptiveWebView src={window.xIpc.getModuleUrl('header', { q: 'test12345' })} />
         </div>
       </div>
     </div>

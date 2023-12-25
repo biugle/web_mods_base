@@ -1,3 +1,11 @@
+/*
+ * @Author: HxB
+ * @Date: 2023-12-23 14:10:06
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-25 10:28:56
+ * @Description: 自定义 webview
+ * @FilePath: \web_mods_base\main\components\AdaptWebView\index.tsx
+ */
 import React, { useEffect, useRef } from 'react';
 import './style.less';
 
@@ -44,8 +52,8 @@ const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
       // eslint-disable-next-line react/no-unknown-property, prettier/prettier, no-undef
       nodeintegration="true"
       // @ts-ignore
-      // eslint-disable-next-line react/no-unknown-property, prettier/prettier, no-undef
-      preload={'file:///F:/WORKSPACINGGGGGG/web_mods_base/build/electron/preload.js'}
+      // eslint-disable-next-line react/no-unknown-property
+      preload={window.xIpc.getPreloadJSPath()}
       ref={webviewRef}
       {...props}
     />

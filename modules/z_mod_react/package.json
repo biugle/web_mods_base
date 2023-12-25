@@ -1,7 +1,7 @@
 {
   "name": "z_mod_react",
-  "displayName": "AngularModule",
-  "description": "AngularModule-Demo",
+  "displayName": "ReactModule",
+  "description": "React-Demo",
   "version": "1.0.0",
   "module_config": {
     "type": "MOD",

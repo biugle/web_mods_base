@@ -1,7 +1,7 @@
 {
   "name": "z_mod_vue",
-  "displayName": "AngularModule",
-  "description": "AngularModule-Demo",
+  "displayName": "VueModule",
+  "description": "VueModule-Demo",
   "version": "1.0.0",
   "module_config": {
     "type": "MOD",

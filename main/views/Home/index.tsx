@@ -2,53 +2,95 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 10:58:36
+ * @LastEditTime: 2023-12-25 15:48:28
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
 import React, { useEffect, useRef, useState } from 'react';
 import './style.less';
+import { Button, Tag, message } from 'antd';
 import AdaptiveWebView from '@/components/AdaptWebView';
+import AntIcon from '@/components/AntIcon';
 
 const Home = () => {
-  const webviewRef = useRef(null);
-  const [webviewHeight, setWebviewHeight] = useState(0);
+  const [tabViews, setTabViews] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<string>('');
+  const [modules, setModules] = useState<any[]>([]);
 
   useEffect(() => {
-    // const resizeWebview = () => {
-    //   const containerHeight = document.querySelector('.webview-wrapper').clientHeight;
-    //   setWebviewHeight(containerHeight);
-    // };
+    window.xIpc
+      .getModules()
+      .then((data: any) => {
+        setModules(data.modulesList);
+      })
+      .catch((e) => {
+        console.log(e);
+        message.error('获取模块失败');
+      });
 
-    // window.addEventListener('resize', resizeWebview);
-    // resizeWebview();
-
-    // 监听新窗口请求
-    // const handleNewWindow = (e) => {
-    //   e.preventDefault(); // 阻止默认行为，不在新窗口中打开链接
-    //   const url = e.targetUrl; // 获取新窗口的链接地址
-    //   webviewRef.current.loadURL(url); // 在同一个 Webview 中加载链接
-    // };
-
-    // // 监听 Webview 的新窗口事件
-    // webviewRef.current.addEventListener('new-window', handleNewWindow);
-
-    return () => {
-      // window.removeEventListener('resize', resizeWebview);
-      // webviewRef.current.removeEventListener('new-window', handleNewWindow);
-    };
+    window.xIpc.on('mods-state', (e, activeTab, modsMap, modsList) => {
+      console.log('mods-state', { activeTab, modsMap, modsList });
+      setActiveTab(activeTab);
+      setTabViews(Object.values(modsMap));
+    });
   }, []);
 
   return (
     <div data-component="Home">
-      <div id="webview-container">
-        <div className="webview-wrapper">
-          <AdaptiveWebView src="https://www.baidu.com" />
-        </div>
-        <div className="webview-wrapper">
-          <AdaptiveWebView src={window.xIpc.getModuleUrl('header', { q: 'test12345' })} />
+      <div id="frame-container"></div>
+      <div id="nav-container">
+        {modules.map((item) => (
+          <Button
+            key={item.name}
+            disabled={item.name === activeTab}
+            onClick={() => {
+              window.xIpc.send('change-mods', item);
+            }}
+          >
+            {item.displayName}
+          </Button>
+        ))}
+      </div>
+      <div className="main">
+        <div id="tool-container"></div>
+        <div className="modules">
+          <div id="tab-container">
+            <span
+              className="tool-icon-btn"
+              onClick={() => {
+                document.getElementById('tool-container').classList.toggle('collapsed');
+                document.querySelector('.tool-icon-btn').classList.toggle('collapsed');
+              }}
+            >
+              <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
+              <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
+            </span>
+            <div>
+              {tabViews.map((item) => (
+                <Tag
+                  key={item.name}
+                  color={item.name === activeTab ? 'geekblue' : 'default'}
+                  onClick={() => {
+                    // window.xIpc.send('change-mods', item);
+                  }}
+                >
+                  {item.displayName}
+                </Tag>
+              ))}
+            </div>
+          </div>
+          <div id="webview-container">
+            {tabViews.map((item) => (
+              <AdaptiveWebView
+                key={item.name}
+                src={window.xIpc.getModuleUrl(item.name)}
+                style={{ display: item.name === activeTab ? 'block' : 'none' }}
+              />
+            ))}
+          </div>
         </div>
       </div>
+      <div id="fullscreen-container"></div>
     </div>
   );
 };

@@ -1,25 +1,21 @@
-/*
- * @Author: HxB
- * @Date: 2023-12-23 14:10:06
- * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 10:28:56
- * @Description: 自定义 webview
- * @FilePath: \web_mods_base\main\components\AdaptWebView\index.tsx
- */
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import './style.less';
 
 const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
   const webviewRef = useRef<any>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const webview = webviewRef.current;
 
-    const handleDomReady = () => {
+    const updateWebViewHeight = () => {
       requestAnimationFrame(() => {
         const parentHeight = webview.parentElement?.offsetHeight || 0;
         webview.style.height = `${parentHeight}px`;
       });
+    };
+
+    const handleDomReady = () => {
+      updateWebViewHeight();
     };
 
     const handleNewWindow = (event: any) => {
@@ -29,12 +25,18 @@ const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
       window.xIpc.send('open-new-window', url);
     };
 
+    const handleResize = () => {
+      updateWebViewHeight();
+    };
+
     webview?.addEventListener('dom-ready', handleDomReady);
     webview?.addEventListener('new-window', handleNewWindow);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       webview?.removeEventListener('dom-ready', handleDomReady);
       webview?.removeEventListener('new-window', handleNewWindow);
+      window.removeEventListener('resize', handleResize);
       // 清理其他可能附加的事件监听器
     };
   }, [props.src]);
@@ -42,13 +44,13 @@ const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
   return (
     <webview
       // @ts-ignore
-      // eslint-disable-next-line react/no-unknown-property, prettier/prettier
+      // eslint-disable-next-line react/no-unknown-property
       autosize="on"
       // @ts-ignore
-      // eslint-disable-next-line react/no-unknown-property, prettier/prettier
+      // eslint-disable-next-line react/no-unknown-property
       allowpopups="true"
       // @ts-ignore
-      // eslint-disable-next-line react/no-unknown-property, prettier/prettier, no-undef
+      // eslint-disable-next-line react/no-unknown-property
       nodeintegration="true"
       // @ts-ignore
       // eslint-disable-next-line react/no-unknown-property

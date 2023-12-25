@@ -25,9 +25,11 @@
   <body>
     Header模块
     <script>
-      document.write(JSON.stringify(window.xIpc.getVersion()));
-      document.write(JSON.stringify(window.xIpc.getModules()));
-      document.write(JSON.stringify(window.location.href));
+      document.writeln(JSON.stringify(window.xIpc.getVersion()));
+      // window.xIpc.getModules().then((data) => {
+      //   document.writeln(JSON.stringify(data.modulesList.map((i) => i.name)));
+      // });
+      document.writeln(JSON.stringify(window.location.href));
     </script>
   </body>
 </html>

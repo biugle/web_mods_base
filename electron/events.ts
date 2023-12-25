@@ -2,11 +2,11 @@
  * @Author: HxB
  * @Date: 2023-05-31 10:49:22
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-22 17:42:17
+ * @LastEditTime: 2023-12-25 11:10:13
  * @Description: 初始化事件
  * @FilePath: \web_mods_base\electron\events.ts
  */
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, app, ipcMain } from 'electron';
 import XCall from 'js-xcall';
 import { checkUpdate } from './updater';
 
@@ -80,6 +80,22 @@ export const initEvents = (mainWindow: BrowserWindow) => {
     mainWindow.webContents.send('sendData', ...args);
   });
 
+  // 监听新开窗口与处理
+  ipcMain.on('open-new-window', (event, url) => {
+    const win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      show: false, // 隐藏窗口，等待图标设置完成后再显示
+    });
+
+    win.loadURL(url);
+
+    win.once('ready-to-show', () => {
+      win.setIcon(app.isPackaged ? 'build/logos/icon.ico' : 'resource/logos/icon.ico');
+      win.show(); // 显示窗口
+    });
+  });
+
   /**
    * XCall Events
    */
@@ -111,35 +127,5 @@ export const initEvents = (mainWindow: BrowserWindow) => {
   // 执行一个 js
   XCall.addCallBack('sendJsExecute', (jsStr: string) => {
     mainWindow.webContents.executeJavaScript(jsStr);
-  });
-
-  const tabContents = {};
-  ipcMain.on('createTab', (event, tabId, url) => {
-    if (!tabContents[tabId]) {
-      const webview = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-          nodeIntegration: true,
-          webviewTag: true,
-        },
-        parent: mainWindow,
-      });
-
-      webview.loadURL(url);
-
-      webview.on('closed', () => {
-        delete tabContents[tabId];
-      });
-
-      tabContents[tabId] = webview;
-    }
-  });
-
-  ipcMain.on('navigateTab', (event, tabId, url) => {
-    const webview = tabContents[tabId];
-    if (webview) {
-      webview.loadURL(url);
-    }
   });
 };

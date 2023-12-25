@@ -10,7 +10,7 @@ import * as path from 'path';
 import fs from 'fs';
 import url from 'url';
 import mime from 'mime-types';
-import { app, BrowserWindow, globalShortcut, ipcMain, protocol } from 'electron';
+import { app, BrowserWindow, globalShortcut, protocol } from 'electron';
 import { initEvents } from './events';
 
 // eslint-disable-next-line no-undef
@@ -97,43 +97,8 @@ const createWindow = () => {
     mainWindow = null;
   });
 
-  ipcMain.on('get-tab-url', (event, tab) => {
-    const tabUrl = getLocalURL(tab.id); // 根据选项卡 ID 获取本地 URL
-    console.log({ tab, tabUrl });
-    event.reply('tab-url', tabUrl);
-  });
-
-  ipcMain.on('open-new-window', (event, url) => {
-    const win = new BrowserWindow({
-      width: 800,
-      height: 600,
-      show: false, // 隐藏窗口，等待图标设置完成后再显示
-    });
-
-    win.loadURL(url);
-
-    win.once('ready-to-show', () => {
-      win.setIcon(app.isPackaged ? 'build/logos/icon.ico' : 'resource/logos/icon.ico');
-      win.show(); // 显示窗口
-    });
-  });
-
   // ...
 
-  // 获取对应选项卡的本地 URL
-  function getLocalURL(tabId) {
-    switch (tabId) {
-      case 'footer':
-        // eslint-disable-next-line no-undef
-        return `file://${__dirname}/modules/footer/index.html`;
-      case 'header':
-        // eslint-disable-next-line no-undef
-        return `file://${__dirname}/modules/header/index.html`;
-      // 添加更多选项卡的情况...
-      default:
-        return '';
-    }
-  }
   // mainWindow.show(); // control mainWindow show
   initEvents(mainWindow);
 };

@@ -3,6 +3,9 @@ import './style.less';
 
 const AdaptiveWebView = (props: { src: string; [key: string]: any }) => {
   const webviewRef = useRef<any>(null);
+  // 以如果不想让 webview 默认加载某个网站，可以初始化为 about:blank 或者 data:text/plain 。
+  // webview.openDevTools();
+  // https://www.electronjs.org/zh/docs/latest/api/webview-tag
 
   useLayoutEffect(() => {
     const webview = webviewRef.current;

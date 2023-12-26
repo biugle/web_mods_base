@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 17:28:05
+ * @LastEditTime: 2023-12-26 09:21:20
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -84,11 +84,12 @@ const Home = () => {
             </div>
           </div>
           <div id="webview-container">
+            {/* <AdaptiveWebView src={'https://baidu.com'} /> */}
             {tabViews.map((item) => (
               <AdaptiveWebView
                 key={item.name}
                 src={window.xIpc.getModuleUrl(item.name)}
-                style={{ display: item.name === activeTab ? 'block' : 'none' }}
+                className={item.name === activeTab ? 'adapt-webview' : 'adapt-webview hidden'}
               />
             ))}
           </div>

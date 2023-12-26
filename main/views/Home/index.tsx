@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 14:23:12
+ * @LastEditTime: 2023-12-26 17:13:58
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -57,17 +57,18 @@ const Home = () => {
       </div>
       <div className="main">
         <div id="tab-container">
-          <span
+          <div
             className="tool-icon-btn"
             onClick={() => {
               document.getElementById('tool-container').classList.toggle('collapsed');
-              document.querySelector('.tool-icon-btn').classList.toggle('collapsed');
+              document.getElementById('tab-container').classList.toggle('collapsed');
             }}
           >
+            <h5 className="tool-title">工具栏</h5>
             <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
             <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
-          </span>
-          <div style={{ marginLeft: '15px', maxWidth: 'calc(100% - 210px)' }}>
+          </div>
+          <div style={{ maxWidth: 'calc(100% - 210px - 128px)' }}>
             <Tabs
               hideAdd
               size="small"
@@ -87,7 +88,7 @@ const Home = () => {
               }))}
             />
           </div>
-          <div style={{ marginLeft: 'auto', width: '210px', display: 'flex', justifyContent: 'flex-end' }}>
+          <div style={{ marginLeft: 'auto', minWidth: '210px', display: 'flex', justifyContent: 'flex-end' }}>
             <AntIcon
               className="icon-btn"
               onClick={() => {

@@ -45,32 +45,91 @@
 
     #tab-container {
       width: 100%;
-      height: 48px;
+      min-height: 48px;
       background-color: whitesmoke;
       display: flex;
       flex-direction: row;
       align-items: center;
       padding: 10px;
 
+      .tool-title {
+        margin-right: 5px;
+        font-size: 20px;
+        letter-spacing: 1px;
+        transition: all 0.5s;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #333;
+        opacity: 0.8;
+        text-shadow: 1px 1px 3px #343a40;
+        cursor: default;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100px;
+          height: 8px;
+          top: 0;
+          left: -100%;
+          background-color: #f8f9fa;
+          opacity: 0.66;
+          transform: rotate(-45deg);
+          animation: flashFlag 2s ease-in 2s infinite;
+        }
+
+        @keyframes flashFlag {
+          0% {
+            left: -100%;
+            top: 0;
+          }
+
+          to {
+            left: 100%;
+            top: 0;
+          }
+        }
+      }
+
+      &.collapsed {
+        .tool-icon-btn {
+          width: 48px;
+
+          .tool-open-icon {
+            display: block;
+          }
+
+          .tool-close-icon {
+            display: none;
+          }
+        }
+
+        .tool-title {
+          opacity: 0;
+          width: 0;
+        }
+      }
+
       .tool-icon-btn {
         font-size: 24px;
         transition: all 0.5s;
         cursor: pointer;
+        margin-left: -10px;
+        width: 128px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .tool-open-icon {
+          margin-top: 3px;
           display: none;
         }
 
         .tool-close-icon {
+          margin-top: 3px;
           display: block;
-        }
-
-        &.collapsed .tool-open-icon {
-          display: block;
-        }
-
-        &.collapsed .tool-close-icon {
-          display: none;
         }
 
         &:active {
@@ -85,19 +144,19 @@
 
     .modules-wrapper {
       width: 100%;
-      height: 100%;
+      min-height: calc(100% - 48px);
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
 
       #tool-container {
         height: 100%;
-        width: 128px;
+        min-width: 128px;
         background-color: whitesmoke;
         transition: all 0.5s;
 
         &.collapsed {
-          width: 48px;
+          min-width: 48px;
         }
       }
 

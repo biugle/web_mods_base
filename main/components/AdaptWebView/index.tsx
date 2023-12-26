@@ -16,8 +16,8 @@ const AdaptiveWebView = (props: { src: string; name?: string; [key: string]: any
 
   const updateWebViewHeight = useCallback(() => {
     requestAnimationFrame(() => {
-      const parentHeight = webviewRef.current.parentElement?.offsetHeight || 0;
-      webviewRef.current.style.height = `${parentHeight}px`;
+      // const parentHeight = webviewRef.current.parentElement?.offsetHeight || 0;
+      // webviewRef.current.style.height = `${parentHeight}px`;
     });
   }, []);
 
@@ -39,7 +39,11 @@ const AdaptiveWebView = (props: { src: string; name?: string; [key: string]: any
   const openDevTools = useCallback(
     (e: any, moduleName: string) => {
       if (props.name === moduleName) {
-        webviewRef.current?.openDevTools();
+        if (!webviewRef.current?.isDevToolsOpened()) {
+          webviewRef.current?.openDevTools();
+        } else {
+          webviewRef.current?.closeDevTools();
+        }
       }
     },
     [props.name],
@@ -54,25 +58,43 @@ const AdaptiveWebView = (props: { src: string; name?: string; [key: string]: any
     [props.name],
   );
 
+  const changeHistory = useCallback(
+    (e: any, moduleName: string, type: 'back' | 'forward') => {
+      if (props.name === moduleName) {
+        type === 'back' ? webviewRef.current?.goBack() : webviewRef.current?.goForward();
+      }
+    },
+    [props.name],
+  );
+
   useEffect(() => {
     const webview = webviewRef.current;
 
-    eventListenersRef.current = { handleDomReady, handleNewWindow, handleResize, openDevTools, reloadWebView };
+    eventListenersRef.current = {
+      handleDomReady,
+      handleNewWindow,
+      handleResize,
+      openDevTools,
+      reloadWebView,
+      changeHistory,
+    };
 
     webview?.addEventListener('dom-ready', eventListenersRef.current.handleDomReady);
     webview?.addEventListener('new-window', eventListenersRef.current.handleNewWindow);
     window.addEventListener('resize', eventListenersRef.current.handleResize);
-    window.xIpc.on('open-module-devTools', eventListenersRef.current.openDevTools);
+    window.xIpc.on('toggle-module-devTools', eventListenersRef.current.openDevTools);
     window.xIpc.on('reload-module-page', eventListenersRef.current.reloadWebView);
+    window.xIpc.on('change-module-history', eventListenersRef.current.changeHistory);
 
     return () => {
       webview?.removeEventListener('dom-ready', eventListenersRef.current.handleDomReady);
       webview?.removeEventListener('new-window', eventListenersRef.current.handleNewWindow);
       window.removeEventListener('resize', eventListenersRef.current.handleResize);
-      window.xIpc.remove('open-module-devTools', eventListenersRef.current.openDevTools);
-      window.xIpc.on('reload-module-page', eventListenersRef.current.reloadWebView);
+      window.xIpc.remove('toggle-module-devTools', eventListenersRef.current.openDevTools);
+      window.xIpc.remove('reload-module-page', eventListenersRef.current.reloadWebView);
+      window.xIpc.remove('change-module-history', eventListenersRef.current.changeHistory);
     };
-  }, [handleDomReady, handleNewWindow, handleResize, openDevTools, reloadWebView]);
+  }, [handleDomReady, handleNewWindow, handleResize, openDevTools, reloadWebView, changeHistory]);
 
   return (
     <webview

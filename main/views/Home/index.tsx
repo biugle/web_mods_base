@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 13:42:02
+ * @LastEditTime: 2023-12-26 14:23:12
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -67,7 +67,7 @@ const Home = () => {
             <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
             <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
           </span>
-          <div style={{ marginLeft: '15px', maxWidth: 'calc(100% - 48px - 48px - 36px)' }}>
+          <div style={{ marginLeft: '15px', maxWidth: 'calc(100% - 210px)' }}>
             <Tabs
               hideAdd
               size="small"
@@ -87,7 +87,43 @@ const Home = () => {
               }))}
             />
           </div>
-          <div style={{ marginLeft: 'auto' }}>tools</div>
+          <div style={{ marginLeft: 'auto', width: '210px', display: 'flex', justifyContent: 'flex-end' }}>
+            <AntIcon
+              className="icon-btn"
+              onClick={() => {
+                window.xIpc.send('change-module-history', activeTab, 'back');
+              }}
+              icon="LeftCircleOutlined"
+            ></AntIcon>
+            <AntIcon
+              className="icon-btn"
+              onClick={() => {
+                window.xIpc.send('change-module-history', activeTab, 'forward');
+              }}
+              icon="RightCircleOutlined"
+            ></AntIcon>
+            <AntIcon
+              className="icon-btn"
+              onClick={() => {
+                window.xIpc.send('close-mods', undefined);
+              }}
+              icon="CloseCircleTwoTone"
+            ></AntIcon>
+            <AntIcon
+              className="icon-btn"
+              onClick={() => {
+                window.xIpc.send('toggle-module-devTools', activeTab);
+              }}
+              icon="ChromeOutlined"
+            ></AntIcon>
+            <AntIcon
+              className="icon-btn reload"
+              onClick={() => {
+                window.xIpc.send('reload-module-page', activeTab);
+              }}
+              icon="SyncOutlined"
+            ></AntIcon>
+          </div>
         </div>
         <div className="modules-wrapper">
           <div id="tool-container"></div>

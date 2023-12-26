@@ -19,6 +19,21 @@
     border: 1px solid blue;
   }
 
+  .icon-btn {
+    font-size: 24px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: auto 5px;
+
+    &.reload:hover {
+      transform: rotate(360deg);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
   .main {
     width: 100%;
     height: calc(100% - 64px);

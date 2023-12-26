@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 12:07:10
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 11:27:50
+ * @LastEditTime: 2023-12-26 14:19:51
  * @Description: 模块控制器
  * @FilePath: \web_mods_base\electron\controller.ts
  */
@@ -35,13 +35,18 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
   });
 
   // 打开指定模块控制台
-  ipcMain.on('open-module-devTools', (event, moduleName) => {
-    event.sender.send('open-module-devTools', moduleName);
+  ipcMain.on('toggle-module-devTools', (event, moduleName) => {
+    event.sender.send('toggle-module-devTools', moduleName);
   });
 
   // 重新加载指定模块
   ipcMain.on('reload-module-page', (event, moduleName) => {
     event.sender.send('reload-module-page', moduleName);
+  });
+
+  // 改变模块 history
+  ipcMain.on('change-module-history', (event, moduleName, type: 'back' | 'forward') => {
+    event.sender.send('change-module-history', moduleName, type);
   });
 
   // 模块加载缓存记录

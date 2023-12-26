@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-18 10:34:52
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 15:19:01
+ * @LastEditTime: 2023-12-26 10:49:54
  * @Description: preload
  * @FilePath: \web_mods_base\electron\preload.ts
  */
@@ -33,6 +33,12 @@ contextBridge.exposeInMainWorld('xIpc', {
   on: (channel, listener) => {
     // listener(event, ...args)
     ipcRenderer.on(channel, listener);
+  },
+  remove: (channel, listener) => {
+    ipcRenderer.removeListener(channel, listener);
+  },
+  removeAll: (channel) => {
+    ipcRenderer.removeAllListeners(channel);
   },
   exit: () => {
     console.log('destroy');

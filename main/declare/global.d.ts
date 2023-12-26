@@ -10,6 +10,8 @@ interface Window {
   xIpc: {
     send: (channel: string, ...args: any[]) => void;
     on: (channel: string, listener: (...args: any[]) => void) => void;
+    remove: (channel: string, listener: (...args: any[]) => void) => void;
+    removeAll: (channel: string) => void;
     exit: () => void;
     getNodeENV: () => string;
     getVersion: () => string;

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 10:02:55
+ * @LastEditTime: 2023-12-26 10:23:30
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -89,6 +89,7 @@ const Home = () => {
             {tabViews.map((item) => (
               <AdaptiveWebView
                 key={item.name}
+                name={item.name}
                 src={window.xIpc.getModuleUrl(item.name)}
                 className={item.name === activeTab ? 'adapt-webview' : 'adapt-webview hidden'}
               />

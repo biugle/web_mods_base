@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 12:28:05
+ * @LastEditTime: 2023-12-26 13:42:02
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -56,41 +56,41 @@ const Home = () => {
         </div>
       </div>
       <div className="main">
-        <div id="tool-container"></div>
-        <div className="modules-wrapper">
-          <div id="tab-container">
-            <span
-              className="tool-icon-btn"
-              onClick={() => {
-                document.getElementById('tool-container').classList.toggle('collapsed');
-                document.querySelector('.tool-icon-btn').classList.toggle('collapsed');
+        <div id="tab-container">
+          <span
+            className="tool-icon-btn"
+            onClick={() => {
+              document.getElementById('tool-container').classList.toggle('collapsed');
+              document.querySelector('.tool-icon-btn').classList.toggle('collapsed');
+            }}
+          >
+            <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
+            <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
+          </span>
+          <div style={{ marginLeft: '15px', maxWidth: 'calc(100% - 48px - 48px - 36px)' }}>
+            <Tabs
+              hideAdd
+              size="small"
+              onChange={(key) => {
+                setActiveTab(key);
               }}
-            >
-              <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
-              <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
-            </span>
-            <div style={{ marginLeft: '10px', maxWidth: 'calc(100% - 48px - 48px - 36px)' }}>
-              <Tabs
-                hideAdd
-                size="small"
-                onChange={(key) => {
-                  setActiveTab(key);
-                }}
-                activeKey={activeTab}
-                type="editable-card"
-                onEdit={(targetKey: string, action: 'add' | 'remove') => {
-                  if (action === 'remove') {
-                    window.xIpc.send('close-mods', targetKey);
-                  }
-                }}
-                items={tabViews.map((i: any) => ({
-                  key: i.name,
-                  label: i.displayName,
-                }))}
-              />
-            </div>
-            <div style={{ marginLeft: 'auto' }}>tools</div>
+              activeKey={activeTab}
+              type="editable-card"
+              onEdit={(targetKey: string, action: 'add' | 'remove') => {
+                if (action === 'remove') {
+                  window.xIpc.send('close-mods', targetKey);
+                }
+              }}
+              items={tabViews.map((i: any) => ({
+                key: i.name,
+                label: i.displayName,
+              }))}
+            />
           </div>
+          <div style={{ marginLeft: 'auto' }}>tools</div>
+        </div>
+        <div className="modules-wrapper">
+          <div id="tool-container"></div>
           <div id="webview-container">
             {/* <AdaptiveWebView src={'https://baidu.com'} /> */}
             {tabViews.map((item) => (

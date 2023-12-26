@@ -23,75 +23,74 @@
     width: 100%;
     height: calc(100% - 64px);
     // height: calc(100% - 32px - 64px);
-    border: 1px solid yellow;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
 
-    #tool-container {
-      height: 100%;
-      width: 128px;
+    #tab-container {
+      width: 100%;
+      height: 48px;
       background-color: whitesmoke;
-      transition: all 0.5s;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 10px;
 
-      &.collapsed {
-        width: 48px;
+      .tool-icon-btn {
+        font-size: 24px;
+        transition: all 0.5s;
+        cursor: pointer;
+
+        .tool-open-icon {
+          display: none;
+        }
+
+        .tool-close-icon {
+          display: block;
+        }
+
+        &.collapsed .tool-open-icon {
+          display: block;
+        }
+
+        &.collapsed .tool-close-icon {
+          display: none;
+        }
+
+        &:active {
+          transform: scale(0.91);
+        }
+      }
+
+      .ant-tabs-nav {
+        margin: 0 !important;
       }
     }
 
-
     .modules-wrapper {
-      flex: auto;
-      min-width: calc(100% - 128px);
-      max-width: calc(100% - 48px);
+      width: 100%;
       height: 100%;
-      border: 1px solid blue;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
 
-      #tab-container {
-        width: 100%;
-        height: 48px;
+      #tool-container {
+        height: 100%;
+        width: 128px;
         background-color: whitesmoke;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 10px;
+        transition: all 0.5s;
 
-        .tool-icon-btn {
-          font-size: 24px;
-          transition: all 0.5s;
-          cursor: pointer;
-
-          .tool-open-icon {
-            display: none;
-          }
-
-          .tool-close-icon {
-            display: block;
-          }
-
-          &.collapsed .tool-open-icon {
-            display: block;
-          }
-
-          &.collapsed .tool-close-icon {
-            display: none;
-          }
-
-          &:active {
-            transform: scale(0.91);
-          }
-        }
-
-        .ant-tabs-nav {
-          margin: 0 !important;
+        &.collapsed {
+          width: 48px;
         }
       }
 
       #webview-container {
         width: 100%;
+        flex: auto;
         overflow: hidden;
-        height: calc(100% - 48px);
+        height: 100%;
         border: 1px solid black;
       }
     }

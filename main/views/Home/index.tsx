@@ -2,13 +2,13 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 10:23:30
+ * @LastEditTime: 2023-12-26 12:28:05
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
 import React, { useEffect, useRef, useState } from 'react';
 import './style.less';
-import { Button, Tag, message } from 'antd';
+import { Button, Tabs, Tag, message } from 'antd';
 import AdaptiveWebView from '@/components/AdaptWebView';
 import AntIcon from '@/components/AntIcon';
 
@@ -57,7 +57,7 @@ const Home = () => {
       </div>
       <div className="main">
         <div id="tool-container"></div>
-        <div className="modules">
+        <div className="modules-wrapper">
           <div id="tab-container">
             <span
               className="tool-icon-btn"
@@ -69,20 +69,27 @@ const Home = () => {
               <AntIcon className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
               <AntIcon className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
             </span>
-            <div style={{ marginLeft: '10px' }}>
-              {tabViews.map((item) => (
-                <Tag
-                  key={item.name}
-                  style={{ cursor: 'pointer' }}
-                  color={item.name === activeTab ? 'geekblue' : 'default'}
-                  onClick={() => {
-                    window.xIpc.send('close-mods', item.name);
-                  }}
-                >
-                  {item.displayName}
-                </Tag>
-              ))}
+            <div style={{ marginLeft: '10px', maxWidth: 'calc(100% - 48px - 48px - 36px)' }}>
+              <Tabs
+                hideAdd
+                size="small"
+                onChange={(key) => {
+                  setActiveTab(key);
+                }}
+                activeKey={activeTab}
+                type="editable-card"
+                onEdit={(targetKey: string, action: 'add' | 'remove') => {
+                  if (action === 'remove') {
+                    window.xIpc.send('close-mods', targetKey);
+                  }
+                }}
+                items={tabViews.map((i: any) => ({
+                  key: i.name,
+                  label: i.displayName,
+                }))}
+              />
             </div>
+            <div style={{ marginLeft: 'auto' }}>tools</div>
           </div>
           <div id="webview-container">
             {/* <AdaptiveWebView src={'https://baidu.com'} /> */}

@@ -32,7 +32,7 @@
     #tool-container {
       height: 100%;
       width: 128px;
-      border: 1px solid red;
+      background-color: whitesmoke;
       transition: all 0.5s;
 
       &.collapsed {
@@ -41,15 +41,17 @@
     }
 
 
-    .modules {
+    .modules-wrapper {
       flex: auto;
+      min-width: calc(100% - 128px);
+      max-width: calc(100% - 48px);
       height: 100%;
       border: 1px solid blue;
 
       #tab-container {
         width: 100%;
         height: 48px;
-        border: 1px solid orange;
+        background-color: whitesmoke;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -80,6 +82,10 @@
             transform: scale(0.91);
           }
         }
+
+        .ant-tabs-nav {
+          margin: 0 !important;
+        }
       }
 
       #webview-container {
@@ -89,5 +95,15 @@
         border: 1px solid black;
       }
     }
+  }
+
+  #fullscreen-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: chocolate;
+    display: none;
   }
 }

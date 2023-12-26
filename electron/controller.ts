@@ -1,8 +1,17 @@
+/*
+ * @Author: HxB
+ * @Date: 2023-12-25 12:07:10
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-26 10:04:05
+ * @Description: 模块控制器
+ * @FilePath: \web_mods_base\electron\controller.ts
+ */
 import { BrowserWindow, app, ipcMain } from 'electron';
 
-const MODS_TAB_MAP: any = {};
+let MODS_TAB_MAP: any = {};
 let ACTIVE_MOD = '404';
-const MODS_TAB_LIST: string[] = [];
+let MODS_TAB_LIST: string[] = [];
+
 export const bindWebviewController = (mainWindow: BrowserWindow) => {
   if (!mainWindow) {
     console.log('未获取到程序信息', mainWindow);
@@ -27,6 +36,10 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
 
   // 模块加载缓存记录
   ipcMain.on('change-mods', (event, module) => {
+    if (!module) {
+      event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
+      return;
+    }
     if (!MODS_TAB_MAP[module.name]) {
       MODS_TAB_MAP[module.name] = module;
     }
@@ -40,6 +53,13 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
 
   // 关闭某个模块
   ipcMain.on('close-mods', (event, moduleName) => {
+    if (!moduleName) {
+      ACTIVE_MOD = '404';
+      MODS_TAB_MAP = {};
+      MODS_TAB_LIST = [];
+      event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
+      return;
+    }
     if (MODS_TAB_MAP[moduleName]) {
       delete MODS_TAB_MAP[moduleName];
     }

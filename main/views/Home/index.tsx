@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 09:21:20
+ * @LastEditTime: 2023-12-26 10:02:55
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -33,6 +33,7 @@ const Home = () => {
       setActiveTab(activeTab);
       setTabViews(Object.values(modsMap));
     });
+    window.xIpc.send('change-mods', undefined);
   }, []);
 
   return (

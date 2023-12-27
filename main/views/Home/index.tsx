@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 17:55:17
+ * @LastEditTime: 2023-12-27 14:34:08
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
@@ -16,6 +16,7 @@ const Home = () => {
   const [tabViews, setTabViews] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<string>('');
   const [modules, setModules] = useState<any[]>([]);
+  const [isMaximized, setIsMaximized] = useState<boolean>(window.xIpc.isMaximized());
 
   useEffect(() => {
     window.xIpc
@@ -33,12 +34,74 @@ const Home = () => {
       setActiveTab(activeTab);
       setTabViews(Object.values(modsMap));
     });
+    window.xIpc.on('mainWindowStatusChange', (e, isMaximized) => {
+      console.log({ isMaximized });
+      setIsMaximized(isMaximized);
+    });
+    window.addEventListener('resize', () => {
+      setIsMaximized(window.xIpc.isMaximized());
+    });
     window.xIpc.send('change-mods', undefined);
   }, []);
 
   return (
     <div data-component="Home">
-      <div id="frame-container"></div>
+      <div id="frame-container">
+        <h1>前端模块化</h1>
+        <div className="frame-toolbar"></div>
+        <div className="frame-control">
+          <AntIcon
+            className="icon-btn reload"
+            title="重新加载"
+            onClick={() => {
+              window.location.reload();
+            }}
+            icon="ReloadOutlined"
+          />
+          <AntIcon
+            className="icon-btn"
+            title="打开控制台"
+            onClick={() => {
+              window.xIpc.toggleDevTools();
+            }}
+            icon="CodeOutlined"
+          />
+          <AntIcon
+            className="icon-btn"
+            title="最小化"
+            onClick={() => {
+              window.xIpc.minimizeWindow();
+            }}
+            icon="MinusOutlined"
+          />
+          <AntIcon
+            className="icon-btn"
+            title="放大"
+            style={{ display: isMaximized ? 'inline-block' : 'none' }}
+            onClick={() => {
+              window.xIpc.changeMainWindowStatus();
+            }}
+            icon="SwitcherOutlined"
+          />
+          <AntIcon
+            className="icon-btn"
+            title="缩小"
+            style={{ display: isMaximized ? 'none' : 'inline-block' }}
+            onClick={() => {
+              window.xIpc.changeMainWindowStatus();
+            }}
+            icon="BorderOutlined"
+          />
+          <AntIcon
+            className="icon-btn"
+            title="退出"
+            onClick={() => {
+              window.xIpc.exit();
+            }}
+            icon="CloseOutlined"
+          />
+        </div>
+      </div>
       <div id="nav-container">
         <div style={{ display: 'flex', width: '100%', height: '100%', alignItems: 'center', padding: '10px' }}>
           {modules.map((item) => (
@@ -139,7 +202,7 @@ const Home = () => {
               <AdaptiveWebView
                 key={item.name}
                 name={item.name}
-                src={window.xIpc.getModuleUrl(item.name)}
+                src={window.xIpc.getModuleUrl(item)}
                 className={item.name === activeTab ? 'adapt-webview' : 'adapt-webview hidden'}
               />
             ))}

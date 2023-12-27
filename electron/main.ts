@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-15 15:42:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 13:46:17
+ * @LastEditTime: 2023-12-27 11:52:18
  * @Description: electron 打包与启动文件主程序
  * @FilePath: \web_mods_base\electron\main.ts
  */
@@ -46,7 +46,8 @@ const createWindow = () => {
     resizable: true,
     // fullscreen: true, // 默认全屏
     // show: false, // is show
-    // frame: false, // 无边框
+    frame: false, // 无边框
+    backgroundColor: '#00000000', // 透明底色
     width: 1280,
     height: 720,
     webPreferences: {

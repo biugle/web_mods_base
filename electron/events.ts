@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-05-31 10:49:22
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-25 13:46:48
+ * @LastEditTime: 2023-12-27 13:57:19
  * @Description: 初始化事件
  * @FilePath: \web_mods_base\electron\events.ts
  */
@@ -62,12 +62,18 @@ export const initEvents = (mainWindow: BrowserWindow) => {
     } else {
       mainWindow.maximize();
     }
+    // TRUE 为最大化
     event.sender.send('mainWindowStatusChange', !status);
   });
 
   // 控制台开关
   ipcMain.on('toggleDevTools', () => {
     toggleDevTools();
+  });
+
+  // 最小化
+  ipcMain.on('minimizeWindow', () => {
+    mainWindow.minimize();
   });
 
   // 设置进度条

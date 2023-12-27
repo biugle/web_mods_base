@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-18 10:34:52
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 10:49:54
+ * @LastEditTime: 2023-12-27 14:07:08
  * @Description: preload
  * @FilePath: \web_mods_base\electron\preload.ts
  */
@@ -61,10 +61,11 @@ contextBridge.exposeInMainWorld('xIpc', {
     return MODULES;
   },
   // eslint-disable-next-line spellcheck/spell-checker
-  getModuleUrl: (moduleName, params = undefined) =>
-    `biu://localhost/modules/${moduleName}/index.html${params ? `?${qsStringify(params)}` : ''}`,
+  getModuleUrl: (module, params = undefined) =>
+    `biu://localhost/modules/${module.name}/${module.module_config.prodPath}${params ? `?${qsStringify(params)}` : ''}`,
   isMinimized: () => ipcRenderer.sendSync('getMainWindowStatus', 'min'),
   isMaximized: () => ipcRenderer.sendSync('getMainWindowStatus', 'max'),
   changeMainWindowStatus: () => ipcRenderer.send('changeMainWindowStatus'),
   toggleDevTools: () => ipcRenderer.send('toggleDevTools'),
+  minimizeWindow: () => ipcRenderer.send('minimizeWindow'),
 });

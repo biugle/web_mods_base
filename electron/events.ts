@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-05-31 10:49:22
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-27 13:57:19
+ * @LastEditTime: 2023-12-27 14:43:42
  * @Description: 初始化事件
  * @FilePath: \web_mods_base\electron\events.ts
  */
@@ -74,6 +74,11 @@ export const initEvents = (mainWindow: BrowserWindow) => {
   // 最小化
   ipcMain.on('minimizeWindow', () => {
     mainWindow.minimize();
+  });
+
+  // 退出
+  ipcMain.on('destroy', () => {
+    mainWindow.destroy();
   });
 
   // 设置进度条

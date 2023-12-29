@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-04-27 10:08:57
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-22 15:09:58
+ * @LastEditTime: 2023-12-29 15:32:51
  * @Description: vite 配置文件
  * @FilePath: \web_mods_base\vite.config.ts
  */
@@ -39,6 +39,8 @@ export default defineConfig(({ command, mode }) => {
             'electron/updater.ts',
             'electron/events.ts',
             'electron/utils.ts',
+            'electron/controller.ts',
+            'electron/store.ts',
           ],
           vite: {
             build: {

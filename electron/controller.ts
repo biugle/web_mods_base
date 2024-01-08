@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 12:07:10
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 14:19:51
+ * @LastEditTime: 2024-01-08 16:48:41
  * @Description: 模块控制器
  * @FilePath: \web_mods_base\electron\controller.ts
  */
@@ -44,6 +44,11 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
     event.sender.send('reload-module-page', moduleName);
   });
 
+  // webview click 事件传递到主程序
+  ipcMain.on('webview-click', (event, webview) => {
+    mainWindow.webContents.send('webview-click', webview);
+  });
+
   // 改变模块 history
   ipcMain.on('change-module-history', (event, moduleName, type: 'back' | 'forward') => {
     event.sender.send('change-module-history', moduleName, type);
@@ -51,6 +56,11 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
 
   // 模块加载缓存记录
   ipcMain.on('change-mods', (event, module) => {
+    if (module && typeof module === 'string') {
+      ACTIVE_MOD = module;
+      event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
+      return;
+    }
     if (!module) {
       event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
       return;
@@ -66,8 +76,8 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
     event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
   });
 
-  // 关闭某个模块
-  ipcMain.on('close-mods', (event, moduleName) => {
+  // 关闭模块
+  ipcMain.on('close-mods', (event, moduleName, type?: 'left' | 'right' | 'other') => {
     if (!moduleName) {
       ACTIVE_MOD = '404';
       MODS_TAB_MAP = {};
@@ -75,14 +85,57 @@ export const bindWebviewController = (mainWindow: BrowserWindow) => {
       event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
       return;
     }
-    if (MODS_TAB_MAP[moduleName]) {
+
+    if (MODS_TAB_MAP[moduleName] && !type) {
       delete MODS_TAB_MAP[moduleName];
+      const tabIndex = MODS_TAB_LIST.indexOf(moduleName);
+      if (tabIndex != -1) {
+        MODS_TAB_LIST.splice(tabIndex, 1);
+      }
+      if (!MODS_TAB_LIST.includes(ACTIVE_MOD)) {
+        ACTIVE_MOD = MODS_TAB_LIST[tabIndex] ?? MODS_TAB_LIST[tabIndex - 1] ?? MODS_TAB_LIST[0] ?? '404';
+      } else {
+        // ACTIVE_MOD 无变化
+      }
+    } else {
+      switch (type) {
+        case 'left': {
+          const moduleKeys = Object.keys(MODS_TAB_MAP);
+          const currentIndex = moduleKeys.indexOf(moduleName);
+          const modulesToRemove = moduleKeys.slice(0, currentIndex);
+          MODS_TAB_LIST = MODS_TAB_LIST.filter((module) => !modulesToRemove.includes(module));
+          modulesToRemove.forEach((module) => {
+            delete MODS_TAB_MAP[module];
+          });
+          if (!MODS_TAB_LIST.includes(ACTIVE_MOD)) {
+            ACTIVE_MOD = moduleName;
+          }
+          break;
+        }
+        case 'right': {
+          const moduleKeys = Object.keys(MODS_TAB_MAP);
+          const currentIndex = moduleKeys.indexOf(moduleName);
+          const modulesToRemove = moduleKeys.slice(currentIndex + 1);
+          MODS_TAB_LIST = MODS_TAB_LIST.filter((module) => !modulesToRemove.includes(module));
+          modulesToRemove.forEach((module) => {
+            delete MODS_TAB_MAP[module];
+          });
+          if (!MODS_TAB_LIST.includes(ACTIVE_MOD)) {
+            ACTIVE_MOD = moduleName;
+          }
+          break;
+        }
+        case 'other': {
+          MODS_TAB_MAP = {
+            [moduleName]: MODS_TAB_MAP[moduleName],
+          };
+          MODS_TAB_LIST = [moduleName];
+          ACTIVE_MOD = moduleName;
+          break;
+        }
+      }
     }
-    const tabIndex = MODS_TAB_LIST.indexOf(moduleName);
-    if (tabIndex != -1) {
-      MODS_TAB_LIST.splice(tabIndex, 1);
-    }
-    ACTIVE_MOD = MODS_TAB_LIST[tabIndex] ?? MODS_TAB_LIST[tabIndex - 1] ?? MODS_TAB_LIST[0] ?? '404';
+
     // 告诉前端现在的 module 与 tab
     event.sender.send('mods-state', ACTIVE_MOD, MODS_TAB_MAP, MODS_TAB_LIST);
   });

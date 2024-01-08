@@ -1,0 +1,30 @@
+#tab-container {
+  width: 100%;
+  min-height: 48px;
+  max-height: 48px;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+
+  .tabs-options {
+    min-width: 210px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .tabs-box {
+    width: calc(100% - 210px);
+    max-width: calc(100% - 210px);
+  }
+
+  .ant-tabs-nav {
+    margin: 0 !important;
+  }
+
+  .ant-tabs-nav-more {
+    cursor: pointer !important;
+  }
+}

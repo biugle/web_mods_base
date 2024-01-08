@@ -80,6 +80,16 @@ const AdaptiveWebView = (props: { src: string; name?: string; [key: string]: any
     };
 
     webview?.addEventListener('dom-ready', eventListenersRef.current.handleDomReady);
+    webview?.addEventListener('dom-ready', () => {
+      // 在 WebView 中执行 JavaScript 代码
+      webview?.executeJavaScript(`
+        // 添加一个点击事件处理程序
+        document.addEventListener('click', function() {
+          // 通过 xIpc 传递到主窗口
+          window.xIpc.send('webview-click', { name: ${JSON.stringify(props.name)} }); 
+        });
+      `);
+    });
     webview?.addEventListener('new-window', eventListenersRef.current.handleNewWindow);
     window.addEventListener('resize', eventListenersRef.current.handleResize);
     window.xIpc.on('toggle-module-devTools', eventListenersRef.current.openDevTools);
@@ -94,7 +104,7 @@ const AdaptiveWebView = (props: { src: string; name?: string; [key: string]: any
       window.xIpc.remove('reload-module-page', eventListenersRef.current.reloadWebView);
       window.xIpc.remove('change-module-history', eventListenersRef.current.changeHistory);
     };
-  }, [handleDomReady, handleNewWindow, handleResize, openDevTools, reloadWebView, changeHistory]);
+  }, [props, handleDomReady, handleNewWindow, handleResize, openDevTools, reloadWebView, changeHistory]);
 
   return (
     <webview

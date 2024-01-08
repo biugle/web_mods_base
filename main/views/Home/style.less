@@ -6,56 +6,6 @@
     position: relative;
   }
 
-  #frame-container {
-    width: 100%;
-    height: 32px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: 1px;
-    color: whitesmoke;
-    background: #00c6ff;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #0072ff, #00c6ff);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #0072ff, #00c6ff);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    h1 {
-      position: relative;
-      padding-left: 26px;
-
-      &::before {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        left: 2px;
-        top: -0.5px;
-        width: 20px;
-        height: 20px;
-        background-image: url('/icon.png');
-        background-position: 100% 100%;
-        background-size: contain;
-        background-repeat: no-repeat;
-      }
-    }
-
-    .frame-toolbar {
-      flex: auto;
-      height: 100%;
-      -webkit-app-region: drag;
-      cursor: pointer;
-    }
-
-    .icon-btn {
-      font-size: 18px;
-    }
-  }
-
   #nav-container {
     width: 100%;
     height: 64px;
@@ -86,105 +36,6 @@
     justify-content: flex-start;
     align-items: flex-start;
 
-    #tool-container {
-      height: 100%;
-      min-width: 128px;
-      width: 128px;
-      background-color: whitesmoke;
-      transition: all 0.5s;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-
-      &.collapsed {
-        min-width: 48px;
-        width: 48px;
-
-        .tool-icon-btn {
-          margin-left: -10px;
-
-          .tool-title {
-            opacity: 0;
-            min-width: 0; // 搭配 margin-left: -10px; 使用
-            // font-size: 0;
-          }
-
-          .tool-open-icon {
-            display: block;
-          }
-
-          .tool-close-icon {
-            display: none;
-          }
-        }
-      }
-
-      .tool-title {
-        font-size: 20px;
-        letter-spacing: 1px;
-        transition: all 0.5s;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: #333;
-        opacity: 0.8;
-        text-shadow: 1px 1px 3px #343a40;
-        cursor: default;
-        position: relative;
-
-        &::after {
-          content: '';
-          position: absolute;
-          width: 100px;
-          height: 8px;
-          top: 0;
-          left: -100%;
-          background-color: #f8f9fa;
-          opacity: 0.66;
-          transform: rotate(-45deg);
-          animation: flashFlag 2s ease-in 2s infinite;
-        }
-
-        @keyframes flashFlag {
-          0% {
-            left: -100%;
-            top: 0;
-          }
-
-          to {
-            left: 100%;
-            top: 0;
-          }
-        }
-      }
-
-      .tool-icon-btn {
-        font-size: 24px;
-        transition: all 0.5s;
-        cursor: pointer;
-        width: 100%;
-        height: 48px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-
-        .tool-open-icon {
-          margin-top: 3px;
-          display: none;
-        }
-
-        .tool-close-icon {
-          margin-top: 3px;
-          display: block;
-        }
-
-        &:active {
-          transform: scale(0.91);
-        }
-      }
-    }
-
     .modules-wrapper {
       min-width: calc(100% - 128px);
       max-width: calc(100% - 48px);
@@ -194,32 +45,6 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-
-      #tab-container {
-        width: 100%;
-        min-height: 48px;
-        max-height: 48px;
-        background-color: whitesmoke;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px;
-
-        .tabs-options {
-          min-width: 210px;
-          display: flex;
-          justify-content: flex-end;
-        }
-
-        .tabs-box {
-          max-width: calc(100% - 210px);
-        }
-
-        .ant-tabs-nav {
-          margin: 0 !important;
-        }
-      }
 
       #webview-container {
         padding: 3px 5px 0;

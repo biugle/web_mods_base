@@ -2,21 +2,22 @@
  * @Author: HxB
  * @Date: 2023-12-21 17:31:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-27 14:34:08
+ * @LastEditTime: 2024-01-08 16:38:52
  * @Description: 主程序页面
  * @FilePath: \web_mods_base\main\views\Home\index.tsx
  */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.less';
-import { Button, Tabs, message } from 'antd';
+import { Button, Empty, message } from 'antd';
 import AdaptiveWebView from '@/components/AdaptWebView';
-import AntIcon from '@/components/AntIcon';
+import TabContainer from '@/components/TabContainer';
+import MenuFrame from '@/components/MenuFrame';
+import ToolContainer from '@/components/ToolContainer';
 
 const Home = () => {
   const [tabViews, setTabViews] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<string>('');
   const [modules, setModules] = useState<any[]>([]);
-  const [isMaximized, setIsMaximized] = useState<boolean>(window.xIpc.isMaximized());
 
   useEffect(() => {
     window.xIpc
@@ -28,80 +29,17 @@ const Home = () => {
         console.log(e);
         message.error('获取模块失败');
       });
-
     window.xIpc.on('mods-state', (e, activeTab, modsMap, modsList) => {
       console.log('mods-state', { activeTab, modsMap, modsList });
       setActiveTab(activeTab);
       setTabViews(Object.values(modsMap));
-    });
-    window.xIpc.on('mainWindowStatusChange', (e, isMaximized) => {
-      console.log({ isMaximized });
-      setIsMaximized(isMaximized);
-    });
-    window.addEventListener('resize', () => {
-      setIsMaximized(window.xIpc.isMaximized());
     });
     window.xIpc.send('change-mods', undefined);
   }, []);
 
   return (
     <div data-component="Home">
-      <div id="frame-container">
-        <h1>前端模块化</h1>
-        <div className="frame-toolbar"></div>
-        <div className="frame-control">
-          <AntIcon
-            className="icon-btn reload"
-            title="重新加载"
-            onClick={() => {
-              window.location.reload();
-            }}
-            icon="ReloadOutlined"
-          />
-          <AntIcon
-            className="icon-btn"
-            title="打开控制台"
-            onClick={() => {
-              window.xIpc.toggleDevTools();
-            }}
-            icon="CodeOutlined"
-          />
-          <AntIcon
-            className="icon-btn"
-            title="最小化"
-            onClick={() => {
-              window.xIpc.minimizeWindow();
-            }}
-            icon="MinusOutlined"
-          />
-          <AntIcon
-            className="icon-btn"
-            title="放大"
-            style={{ display: isMaximized ? 'inline-block' : 'none' }}
-            onClick={() => {
-              window.xIpc.changeMainWindowStatus();
-            }}
-            icon="SwitcherOutlined"
-          />
-          <AntIcon
-            className="icon-btn"
-            title="缩小"
-            style={{ display: isMaximized ? 'none' : 'inline-block' }}
-            onClick={() => {
-              window.xIpc.changeMainWindowStatus();
-            }}
-            icon="BorderOutlined"
-          />
-          <AntIcon
-            className="icon-btn"
-            title="退出"
-            onClick={() => {
-              window.xIpc.exit();
-            }}
-            icon="CloseOutlined"
-          />
-        </div>
-      </div>
+      <MenuFrame />
       <div id="nav-container">
         <div style={{ display: 'flex', width: '100%', height: '100%', alignItems: 'center', padding: '10px' }}>
           {modules.map((item) => (
@@ -119,93 +57,30 @@ const Home = () => {
         </div>
       </div>
       <div className="main">
-        <div id="tool-container">
-          <div
-            className="tool-icon-btn"
-            onClick={() => {
-              document.getElementById('tool-container').classList.toggle('collapsed');
-            }}
-          >
-            <h5 className="tool-title">工具栏</h5>
-            <AntIcon title="展开" className="tool-open-icon" icon="MenuUnfoldOutlined"></AntIcon>
-            <AntIcon title="收起" className="tool-close-icon" icon="MenuFoldOutlined"></AntIcon>
-          </div>
-        </div>
+        <ToolContainer />
         <div className="modules-wrapper">
-          <div id="tab-container">
-            <div className="tabs-box">
-              <Tabs
-                hideAdd
-                size="small"
-                onChange={(key) => {
-                  setActiveTab(key);
-                }}
-                activeKey={activeTab}
-                type="editable-card"
-                onEdit={(targetKey: string, action: 'add' | 'remove') => {
-                  if (action === 'remove') {
-                    window.xIpc.send('close-mods', targetKey);
-                  }
-                }}
-                items={tabViews.map((i: any) => ({
-                  key: i.name,
-                  label: i.displayName,
-                }))}
-              />
-            </div>
-            <div className="tabs-options">
-              <AntIcon
-                className="icon-btn"
-                title="后退"
-                onClick={() => {
-                  window.xIpc.send('change-module-history', activeTab, 'back');
-                }}
-                icon="LeftCircleOutlined"
-              ></AntIcon>
-              <AntIcon
-                className="icon-btn"
-                title="前进"
-                onClick={() => {
-                  window.xIpc.send('change-module-history', activeTab, 'forward');
-                }}
-                icon="RightCircleOutlined"
-              ></AntIcon>
-              <AntIcon
-                className="icon-btn"
-                title="关闭所有模块"
-                onClick={() => {
-                  window.xIpc.send('close-mods', undefined);
-                }}
-                icon="CloseCircleTwoTone"
-              ></AntIcon>
-              <AntIcon
-                className="icon-btn"
-                title="打开模块控制台"
-                onClick={() => {
-                  window.xIpc.send('toggle-module-devTools', activeTab);
-                }}
-                icon="ChromeOutlined"
-              ></AntIcon>
-              <AntIcon
-                className="icon-btn reload"
-                title="刷新模块"
-                onClick={() => {
-                  window.xIpc.send('reload-module-page', activeTab);
-                }}
-                icon="SyncOutlined"
-              ></AntIcon>
-            </div>
-          </div>
+          <TabContainer
+            onChange={(key) => {
+              setActiveTab(key);
+              window.xIpc.send('change-mods', key);
+            }}
+            activeTab={activeTab}
+            tabViews={tabViews}
+          />
           <div id="webview-container">
             {/* <AdaptiveWebView src={'https://baidu.com'} /> */}
-            {tabViews.map((item) => (
-              <AdaptiveWebView
-                key={item.name}
-                name={item.name}
-                src={window.xIpc.getModuleUrl(item)}
-                className={item.name === activeTab ? 'adapt-webview' : 'adapt-webview hidden'}
-              />
-            ))}
+            {tabViews.length ? (
+              tabViews.map((item) => (
+                <AdaptiveWebView
+                  key={item.name}
+                  name={item.name}
+                  src={window.xIpc.getModuleUrl(item)}
+                  className={item.name === activeTab ? 'adapt-webview' : 'adapt-webview hidden'}
+                />
+              ))
+            ) : (
+              <Empty description="" style={{ margin: '25vh auto' }} />
+            )}
           </div>
         </div>
       </div>

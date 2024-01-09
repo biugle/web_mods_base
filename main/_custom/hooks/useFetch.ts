@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2024-01-08 18:21:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 12:35:48
+ * @LastEditTime: 2024-01-09 14:06:21
  * @Description: useFetch 自定义 hooks
  * @FilePath: \web_mods_base\main\_custom\hooks\useFetch.ts
  */
@@ -46,11 +46,14 @@ const useFetch = (
     setIsLoading(true);
 
     const contentType =
+      headers.contenttype ??
       headers.contentType ??
       headers.ContentType ??
+      headers.Contenttype ??
       headers['content-type'] ??
       headers['content-Type'] ??
-      headers?.['Content-Type'];
+      headers['Content-Type'] ??
+      headers['Content-type'];
 
     try {
       const options: any = {

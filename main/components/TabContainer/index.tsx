@@ -2,11 +2,12 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:42:28
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-08 16:41:23
+ * @LastEditTime: 2024-01-09 15:26:49
  * @Description: TabContainer
  * @FilePath: \web_mods_base\main\components\TabContainer\index.tsx
  */
 import React, { useEffect } from 'react';
+import { emitEvent } from 'js-xxx';
 import { Dropdown, Tabs } from 'antd';
 import AntIcon from '@/components/AntIcon';
 import './style.less';
@@ -15,12 +16,7 @@ const TabContainer = (props: { onChange: any; tabViews: any[]; activeTab: string
   // 监听 webview 点击，关闭 dropdown 。
   useEffect(() => {
     window.xIpc.on('webview-click', (event, webview) => {
-      const clickEvent = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-      document.querySelector('#tab-container').dispatchEvent(clickEvent);
+      emitEvent('click', document.querySelector('#tab-container'));
       console.log(webview);
     });
   }, []);

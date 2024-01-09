@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-08-15 15:42:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-27 11:52:18
+ * @LastEditTime: 2024-01-12 10:43:06
  * @Description: electron 打包与启动文件主程序
  * @FilePath: \web_mods_base\electron\main.ts
  */
@@ -47,7 +47,8 @@ const createWindow = () => {
     // fullscreen: true, // 默认全屏
     // show: false, // is show
     frame: false, // 无边框
-    backgroundColor: '#00000000', // 透明底色
+    transparent: true,
+    backgroundColor: 'rgba(0,0,0,0)',
     width: 1280,
     height: 720,
     webPreferences: {

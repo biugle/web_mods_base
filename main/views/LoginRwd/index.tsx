@@ -3,7 +3,7 @@
  * @Date: 2023-07-19 15:32:21
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-08-02 10:27:56
- * @Description: 登录页面响应式（阿彪费劲心思重写出来的）
+ * @Description: 登录页面响应式
  * @FilePath: \web_base\src\views\LoginRwd\index.tsx
  */
 import React, { useCallback, useEffect, useState } from 'react';

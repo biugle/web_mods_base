@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:42:28
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-04-28 18:16:56
+ * @LastEditTime: 2024-05-13 12:23:38
  * @Description: useInterval 自定义 hooks
- * @FilePath: \web_base\src\_custom\hooks\useInterval.ts
+ * @FilePath: \web_mods_base\main\_custom\hooks\useInterval.ts
  */
 import { useEffect } from 'react';
 import useLatest from './useLatest';

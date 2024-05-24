@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:42:28
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-04-27 14:43:29
+ * @LastEditTime: 2024-05-13 12:24:52
  * @Description: useUnmounted 自定义 hooks
- * @FilePath: \web_base\src\_custom\hooks\useUnmount.ts
+ * @FilePath: \web_mods_base\main\_custom\hooks\useUnmount.ts
  */
 import { useEffect, useRef } from 'react';
 

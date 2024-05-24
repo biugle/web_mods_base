@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2023-04-27 15:38:29
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-04-27 17:31:59
+ * @LastEditTime: 2024-05-13 12:24:26
  * @Description: useRouterChange 自定义 hooks
- * @FilePath: \web_base\src\_custom\hooks\useRouterChange.ts
+ * @FilePath: \web_mods_base\main\_custom\hooks\useRouterChange.ts
  */
 import { XCall } from 'js-xcall';
 import { useEffect } from 'react';

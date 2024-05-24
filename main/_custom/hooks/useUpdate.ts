@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:42:28
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-04-27 14:44:08
+ * @LastEditTime: 2024-05-13 12:24:58
  * @Description: useUpdate 自定义 hooks
- * @FilePath: \web_base\src\_custom\hooks\useUpdate.ts
+ * @FilePath: \web_mods_base\main\_custom\hooks\useUpdate.ts
  */
 import { useCallback, useState } from 'react';
 

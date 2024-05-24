@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:42:28
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-04-27 14:43:22
+ * @LastEditTime: 2024-05-13 12:24:46
  * @Description: useTimeout 自定义 hooks
- * @FilePath: \web_base\src\_custom\hooks\useTimeout.ts
+ * @FilePath: \web_mods_base\main\_custom\hooks\useTimeout.ts
  */
 import { useEffect } from 'react';
 import useLatest from './useLatest';

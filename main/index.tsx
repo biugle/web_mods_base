@@ -2,9 +2,9 @@
  * @Author: Leo He
  * @Date: 2023-04-27 15:32:55
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-07-04 16:12:36
+ * @LastEditTime: 2024-05-13 12:31:29
  * @Description: 主文件入口
- * @FilePath: \web_base\src\main.tsx
+ * @FilePath: \web_mods_base\main\index.tsx
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -15,12 +15,12 @@ import '@_custom/css/app.less';
 import '@_custom/css/styles.less';
 import store from '@store/all';
 import zhCN from 'antd/locale/zh_CN';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import routes from './router';
-import 'dayjs/locale/zh-cn';
+// import 'dayjs/locale/zh-cn';
 import App from './App';
 
-dayjs.locale('zh-cn');
+// dayjs.locale('zh-cn');
 
 notification.config({
   placement: 'topRight',

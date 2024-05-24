@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-04-27 14:42:28
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 15:26:49
+ * @LastEditTime: 2024-05-13 11:56:32
  * @Description: TabContainer
  * @FilePath: \web_mods_base\main\components\TabContainer\index.tsx
  */
@@ -16,7 +16,7 @@ const TabContainer = (props: { onChange: any; tabViews: any[]; activeTab: string
   // 监听 webview 点击，关闭 dropdown 。
   useEffect(() => {
     window.xIpc.on('webview-click', (event, webview) => {
-      emitEvent('click', document.querySelector('#tab-container'));
+      emitEvent('click', null, document.querySelector('#tab-container'));
       console.log(webview);
     });
   }, []);

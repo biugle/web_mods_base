@@ -1,5 +1,7 @@
 # web_mods_base
 
+# 建议使用 [biao](https://github.com/biugle/biao) 现代化企业级前端应用基座
+
 > 基于 Electron 实现的前端模组化客户端模板，使用类似微前端的模式进行不同框架项目之间的协同与管理，采用浏览器用户交互模式进行框架设计。
 
 ## @TODO
